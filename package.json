@@ -1,0 +1,62 @@
+{
+  "name": "type-form",
+  "version": "0.0.1",
+  "description": "Generate react-jsonschema-form schemas from decorators on TypeScript classs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublish": "npm run build",
+    "lint": "node node_modules/tslint/bin/tslint -c tslint.json -t codeFrame 'src/**/*.{ts,tsx}'",
+    "lint:fix": "node node_modules/tslint/bin/tslint -c tslint.json -t codeFrame 'src/**/*.{ts,tsx}' --fix",
+    "test": "jest",
+    "test:cover": "npm run test -- --coverage ",
+    "clean-dist": "npm run remove-dist",
+    "remove-dist": "rimraf ./dist/*",
+    "prebuild": "npm run remove-dist",
+    "build": "node ./node_modules/typescript/bin/tsc --outDir ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devnet-io/type-form.git"
+  },
+  "keywords": [
+    "TypeScript",
+    "React",
+    "react-jsonschema-form"
+  ],
+  "author": "Joe Esposito <joe@devnet.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devnet-io/type-form/issues"
+  },
+  "homepage": "https://github.com/devnet-io/type-form#readme",
+  "dependencies": {
+    "lodash": "4.17.4",
+    "react-registry": "^0.5.0"
+  },
+  "devDependencies": {
+    "@types/jest": "20.0.8",
+    "@types/lodash": "4.14.74",
+    "@types/prop-types": "15.5.2",
+    "@types/react": "^16.0.38",
+    "jest": "21.1.0",
+    "jest-cli": "21.1.0",
+    "react": "^16.2.0",
+    "rimraf": "2.6.1",
+    "ts-jest": "21.0.1",
+    "tslint": "5.7.0",
+    "typescript": "^2.7.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "spec.*\\.(ts|tsx|js|jsx)$"
+  }
+}
