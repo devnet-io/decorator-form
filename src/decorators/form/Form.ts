@@ -1,4 +1,5 @@
-import { SCHEMA, setupSchema } from '../../generate';
+import { getSchemaKey } from '../../generate';
+import Class from '../../util/Class';
 import FormArgs from './FormArgs';
 import IFormArgs from './IFormArgs';
 
@@ -12,9 +13,10 @@ import IFormArgs from './IFormArgs';
 const Form = (params?: IFormArgs) => {
 	const args = FormArgs.parseArgs(params);
 
-	return (cls: any) => {
-		cls.prototype[SCHEMA] = {...cls.prototype[SCHEMA], ...args};
-		return cls;
+	return (clazz: Class) => {
+		const key = getSchemaKey(clazz);
+		clazz.prototype[key] = {...clazz.prototype[key], ...args};
+		return clazz;
 	};
 };
 

@@ -1,6 +1,6 @@
 import { Registry } from "react-registry";
-import { InputType } from "./InputType";
 import { providerConditions } from "../generate";
+import { InputType } from "./InputType";
 
 /**
  * Associates an input with a data type, an existing ui:widget, or allows a custom widget to be defined
@@ -14,9 +14,9 @@ export type WidgetOverride = (props: IWidgetProps) => any;
 export interface IWidgetProps {
 	value: any;
 	onChange: (newValue: any) => any;
-	required: boolean;
-	disabled: boolean;
-	label: string;
+	required?: boolean;
+	disabled?: boolean;
+	label?: string;
 }
 
 export interface IFieldWrapperArgs {

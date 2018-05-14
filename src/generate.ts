@@ -1,6 +1,7 @@
 import { Provider } from "react-registry";
 import FieldWrapper from "./fields/FieldWrapper";
 import { InputType } from "./fields/InputType";
+import Class from "./util/Class";
 import { iDef } from "./util/TypeUtils";
 
 /**
@@ -10,22 +11,42 @@ import { iDef } from "./util/TypeUtils";
  * @author Joe Esposito <joe@devnet.io>
  */
 
-export const SCHEMA: string = "__query__";
+export const SCHEMA: string = "__schema__";
 export const providerConditions = {override: true};
 
-export const setupSchema = (cls: any) => {
-	if (typeof cls[SCHEMA] === "undefined") {
-		cls[SCHEMA] = { properties: [] };
-		return true;
+export const setupSchema = (clazz: any): string => {
+	const key = getSchemaKey(clazz.constructor);
+
+	if (typeof clazz[key] === "undefined") {
+		clazz[key] = { properties: [] };
 	}
-	return false;
+
+	return key;
 };
 
-export const generateSchema = (cls: any, asJson: boolean = false): string | object => {
-	const instance = new cls();
+// get a key using the constructor name so its unique form super classes
+export function getSchemaKey(clazz: Class) {
+	return SCHEMA + (clazz as any).name;
+}
 
-	if (typeof instance === "object" && typeof instance[SCHEMA] === "object") {
-		const data = {...instance[SCHEMA]} as any;
+export interface ISchema {
+	schema: object;
+	uiSchema: object;
+}
+
+export const generateSchema = (clazz: any): ISchema => {
+	const key = getSchemaKey(clazz);
+	const instance = new clazz();
+
+	if (typeof instance === "object" && typeof instance[key] === "object") {
+		const data: any = {properties: []};
+
+		// look for data schemas and properties from super classes
+		findInherited(instance, (s: any) => {
+			// add them to current schema, with current schema's properties overriding
+			data.properties = [...s.properties, ...data.properties];
+		});
+
 		const schema: any = { title: data.title, description: data.description };
 		const uiSchema: any = {};
 
@@ -59,10 +80,17 @@ export const generateSchema = (cls: any, asJson: boolean = false): string | obje
 			}
 		});
 
-		const out = {schema, uiSchema};
-
-		return asJson ? JSON.stringify(out) : out;
+		return {schema, uiSchema};
 	}
 
 	throw Error("Invalid class supplied. Make sure you are not passing an object instead.");
 };
+
+// recuse though prototypes to find schemas generated for super classes
+function findInherited(instance: any, callback: (schema: object) => void): any {
+
+	Object.keys(instance.__proto__).filter((k) => k.startsWith(SCHEMA)).forEach((k) => {
+		callback(instance[k]);
+		return findInherited(instance.__proto__, callback);
+	});
+}

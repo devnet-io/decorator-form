@@ -12,9 +12,9 @@ import InputArgs from './InputArgs';
 const Input = (params?: IInputArgs) => {
 	const args = InputArgs.parseArgs(params);
 
-	return (cls: any, property: string) => {
-		setupSchema(cls);
-		cls[SCHEMA].properties.push({...args, id: property});
+	return (clazz: any, property: string) => {
+		const key = setupSchema(clazz);
+		clazz[key].properties.push({...args, id: property});
 	};
 };
 
