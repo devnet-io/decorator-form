@@ -1,6 +1,6 @@
 {
   "name": "decorator-form",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Generate react-jsonschema-form schemas from decorators on TypeScript classes",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devnet-io/type-form.git"
+    "url": "git+https://github.com/devnet-io/decorator-form.git"
   },
   "keywords": [
     "TypeScript",

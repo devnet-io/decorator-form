@@ -52,7 +52,7 @@ export interface IFieldWrapperArgs {
 export default class FieldWrapper {
 	private dataType: string;
 	private uiWidget: string | React.StatelessComponent<IWidgetProps<any>> | React.ComponentClass<IWidgetProps<any>>;
-	private uiField: React.StatelessComponent<IFieldProps<any>> | React.ComponentClass<IFieldProps<any>>;;
+	private uiField: React.StatelessComponent<IFieldProps<any>> | React.ComponentClass<IFieldProps<any>>;
 	private label: boolean;
 	private arrayType: string;
 
