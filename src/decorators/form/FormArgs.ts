@@ -2,7 +2,7 @@ import IFormArgs from './IFormArgs';
 
 /**
  * Parses and validates the common arguments object passed to {@link Form}
- * For full documentation: {@link https://www.devnet.io/libs/type-form/}
+ * For full documentation: {@link https://www.devnet.io/libs/decorator-form/}
  *
  * @author Joe Esposito <joe@devnet.io>
  */

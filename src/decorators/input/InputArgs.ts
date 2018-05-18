@@ -3,7 +3,7 @@ import { IInputArgs } from './IInputArgs';
 
 /**
  * Parses and validates the common arguments object passed to {@link Input}
- * For full documentation: {@link https://www.devnet.io/libs/type-form/}
+ * For full documentation: {@link https://www.devnet.io/libs/decorator-form/}
  *
  * @author Joe Esposito <joe@devnet.io>
  */

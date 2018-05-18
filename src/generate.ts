@@ -6,7 +6,7 @@ import { iDef } from "./util/TypeUtils";
 
 /**
  * Core functionality of the library.
- * For full documentation: {@link https://www.devnet.io/libs/type-form/}
+ * For full documentation: {@link https://www.devnet.io/libs/decorator-form/}
  *
  * @author Joe Esposito <joe@devnet.io>
  */
@@ -32,6 +32,7 @@ export function getSchemaKey(clazz: Class) {
 export interface ISchema {
 	schema: object;
 	uiSchema: object;
+	fields: { [name: string]: any };
 }
 
 export const generateSchema = (clazz: any): ISchema => {
@@ -49,6 +50,7 @@ export const generateSchema = (clazz: any): ISchema => {
 
 		const schema: any = { title: data.title, description: data.description };
 		const uiSchema: any = {};
+		const fields: any = {};
 
 		// only supports object type atm
 		schema.type = "object";
@@ -57,19 +59,37 @@ export const generateSchema = (clazz: any): ISchema => {
 		// filter required field
 		schema.required = data.properties.filter((p: any) => p.required).map((p: any) => p.id);
 
-		const provider = new Provider({registry: "type-form", conditions: providerConditions});
+		const provider = new Provider({registry: "decorator-form", conditions: providerConditions});
 
 		// get correct data type
 		data.properties.forEach((p: any) => {
 			const fieldWrapper = provider.get(p.type) as FieldWrapper;
 
-			if(typeof fieldWrapper !== "undefined") {
+			if(iDef(fieldWrapper)) {
 				schema.properties[p.id] = {...p, id: undefined, required: undefined, type: fieldWrapper.getDataType()};
 
-				const widget = fieldWrapper.getUiWidget();
+				const field = fieldWrapper.getUiField();
 
-				if(iDef(widget)) {
-					uiSchema[p.id] = {["ui:widget"]: widget};
+				// if an override for the entire field is defined, use that and dont check for new widgets
+				if(iDef(field)) {
+
+					uiSchema[p.id] = {["ui:field"]: p.id};
+					fields[p.id] = field;
+
+				} else {
+
+					const widget = fieldWrapper.getUiWidget();
+
+					if(iDef(widget)) {
+						uiSchema[p.id] = {["ui:widget"]: widget};
+					}
+
+					const array = fieldWrapper.isArray();
+
+					if(iDef(array)) {
+						schema.properties[p.id] = {...schema.properties[p.id], items: {type: fieldWrapper.getArrayType()}};
+					}
+
 				}
 
 				const label = fieldWrapper.isLabel();
@@ -80,7 +100,7 @@ export const generateSchema = (clazz: any): ISchema => {
 			}
 		});
 
-		return {schema, uiSchema};
+		return {schema, uiSchema, fields};
 	}
 
 	throw Error("Invalid class supplied. Make sure you are not passing an object instead.");

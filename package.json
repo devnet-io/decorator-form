@@ -27,9 +27,9 @@
   "author": "Joe Esposito <joe@devnet.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/devnet-io/type-form/issues"
+    "url": "https://github.com/devnet-io/decorator-form/issues"
   },
-  "homepage": "https://github.com/devnet-io/type-form#readme",
+  "homepage": "https://github.com/devnet-io/decorator-form#readme",
   "dependencies": {
     "lodash": "4.17.4",
     "react-registry": "^0.5.0"

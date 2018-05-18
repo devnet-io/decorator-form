@@ -1,6 +1,6 @@
 /**
  * Helper functions for checking if variables are undefined
- * For full documentation: {@link https://www.devnet.io/libs/type-form/}
+ * For full documentation: {@link https://www.devnet.io/libs/decorator-form/}
  *
  * @author Joe Esposito <joe@devnet.io>
  */
