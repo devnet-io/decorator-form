@@ -1,6 +1,5 @@
 import { Provider } from "react-registry";
 import FieldWrapper from "./fields/FieldWrapper";
-import { InputType } from "./fields/InputType";
 import Class from "./util/Class";
 import { iDef } from "./util/TypeUtils";
 
@@ -35,7 +34,7 @@ export interface ISchema {
 	fields: { [name: string]: any };
 }
 
-export const generateSchema = (clazz: any): ISchema => {
+export const generateSchema = (clazz: any, conditions?: { [key: string]: any}): ISchema => {
 	const key = getSchemaKey(clazz);
 	const instance = new clazz();
 
@@ -59,7 +58,10 @@ export const generateSchema = (clazz: any): ISchema => {
 		// filter required field
 		schema.required = data.properties.filter((p: any) => p.required).map((p: any) => p.id);
 
-		const provider = new Provider({registry: "decorator-form", conditions: providerConditions});
+		const provider = new Provider({
+			registry: "decorator-form",
+			conditions: iDef(conditions) ? {...conditions, ...providerConditions} : providerConditions
+		});
 
 		// get correct data type
 		data.properties.forEach((p: any) => {

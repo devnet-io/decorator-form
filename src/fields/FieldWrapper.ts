@@ -89,8 +89,8 @@ export default class FieldWrapper {
 	}
 }
 
-export function registerExternal(type: InputType | string, wrapper: FieldWrapper) {
-	register(type, wrapper, providerConditions);
+export function registerExternal(type: InputType | string, wrapper: FieldWrapper, conditions?: object) {
+	register(type, wrapper, iDef(conditions) ? {...conditions, ...providerConditions} : providerConditions);
 }
 
 export function register(type: InputType | string, wrapper: FieldWrapper, conditions?: object) {
