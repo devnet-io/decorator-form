@@ -18,16 +18,16 @@ export interface IWidgetProps<T> {
 	onChange: (newValue: T) => void;
 	required?: boolean;
 	disabled?: boolean;
-	readonly: boolean;
-	autofocus: boolean;
-	options: object;
+	readonly?: boolean;
+	autofocus?: boolean;
+	options?: object;
 	label?: string;
 }
 
 export type FieldOverride<T> = React.StatelessComponent<IFieldProps<any>> | React.ComponentClass<IFieldProps<any>>;
 
 export interface IFieldProps<T> {
-	value: T;
+	//value: T;
 	onChange: (newValue: T) => void;
 	formContext?: any;
 	autofocus?: boolean;
@@ -38,7 +38,7 @@ export interface IFieldProps<T> {
 	label?: string;
 	uiSchema: any;
 	idSchema: any;
-	formData: any;
+	formData: T;
 }
 
 export interface IFieldWrapperArgs {
