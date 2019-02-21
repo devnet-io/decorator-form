@@ -57,7 +57,7 @@ export const generateSchema = (clazz: any, conditions?: { [key: string]: any}, e
 		schema.properties = {};
 
 		// filter required field
-		schema.required = data.properties.filter((p: any) => p.required).map((p: any) => p.id);
+		schema.required = data.properties.filter((p: any) => p.required && (!excluded || !includes(excluded, p.id))).map((p: any) => p.id);
 
 		const provider = new Provider({
 			registry: "decorator-form",
