@@ -1,3 +1,4 @@
+import { includes } from "lodash";
 import { Provider } from "react-registry";
 import FieldWrapper from "./fields/FieldWrapper";
 import Class from "./util/Class";
@@ -34,7 +35,7 @@ export interface ISchema {
 	fields: { [name: string]: any };
 }
 
-export const generateSchema = (clazz: any, conditions?: { [key: string]: any}): ISchema => {
+export const generateSchema = (clazz: any, conditions?: { [key: string]: any}, excluded?: string[]): ISchema => {
 	const key = getSchemaKey(clazz);
 	const instance = new clazz();
 
@@ -65,6 +66,12 @@ export const generateSchema = (clazz: any, conditions?: { [key: string]: any}): 
 
 		// get correct data type
 		data.properties.forEach((p: any) => {
+
+			// ignore the field if its to be excluded
+			if(excluded && includes(excluded, p.id)) {
+				return;
+			}
+
 			const fieldWrapper = provider.get(p.type) as FieldWrapper;
 
 			if(iDef(fieldWrapper)) {

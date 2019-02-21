@@ -25,4 +25,8 @@ describe("Schema Generator", () => {
 		expect(JSON.stringify(schema)).toEqual(JSON.stringify(schema));
 	});
 
+	it("exclude test", () => {
+		const schema = generateSchema(TestClass, null, ["lastName"]);
+		expect(JSON.stringify(schema)).toEqual(JSON.stringify(schema));
+	});
 });
