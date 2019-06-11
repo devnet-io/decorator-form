@@ -10,5 +10,6 @@ import { InputType } from "../../fields/InputType";
 export interface IInputArgs {
 	type: InputType | string;
 	title: string;
+	description?: string;
 	required?: boolean;
 }

@@ -26,10 +26,12 @@ export default class InputArgs implements IInputArgs {
 
 	public type: InputType;
 	public title: string;
+	public description?: string;
 
-	constructor(type: InputType, title: string) {
+	constructor(type: InputType, title: string, description?: string) {
 		this.type = type;
 		this.title = title;
+		this.description = description;
 	}
 
 	public isValid(): boolean {
