@@ -27,7 +27,7 @@ export interface IWidgetProps<T> {
 export type FieldOverride<T> = React.StatelessComponent<IFieldProps<any>> | React.ComponentClass<IFieldProps<any>>;
 
 export interface IFieldProps<T> {
-	//value: T;
+	// value: T;
 	onChange: (newValue: T) => void;
 	formContext?: any;
 	autofocus?: boolean;
@@ -38,6 +38,7 @@ export interface IFieldProps<T> {
 	label?: string;
 	uiSchema: any;
 	idSchema: any;
+	schema?: any; // get things like "title"
 	formData: T;
 }
 

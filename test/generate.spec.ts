@@ -29,4 +29,11 @@ describe("Schema Generator", () => {
 		const schema = generateSchema(TestClass, null, ["lastName"]);
 		expect(JSON.stringify(schema)).toEqual(JSON.stringify(schema));
 	});
+
+	it("Adds title and description from Form decorator", () => {
+		const { schema } = generateSchema(TestClass);
+
+		expect(schema.title).toEqual("Test Form");
+		expect(schema.description).toEqual("Really!");
+	});
 });

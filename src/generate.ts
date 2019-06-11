@@ -30,7 +30,7 @@ export function getSchemaKey(clazz: Class) {
 }
 
 export interface ISchema {
-	schema: object;
+	schema: any;
 	uiSchema: object;
 	fields: { [name: string]: any };
 }
@@ -40,7 +40,11 @@ export const generateSchema = (clazz: any, conditions?: { [key: string]: any}, e
 	const instance = new clazz();
 
 	if (typeof instance === "object" && typeof instance[key] === "object") {
-		const data: any = {properties: []};
+		const data: any = {
+			description: instance.__proto__[key].description,
+			properties: [],
+			title: instance.__proto__[key].title
+		};
 
 		// look for data schemas and properties from super classes
 		findInherited(instance, (s: any) => {
