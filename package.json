@@ -1,6 +1,6 @@
 {
   "name": "decorator-form",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "description": "Generate react-jsonschema-form schemas from decorators on TypeScript classes",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
